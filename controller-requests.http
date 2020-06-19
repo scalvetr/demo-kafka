@@ -1,0 +1,15 @@
+### GET request to /actuator/health
+GET {{baseUrl}}/customers
+Accept: application/json
+Host: {{host}}
+
+
+### POST request to /actuator/custom false
+POST {{baseUrl}}/customers
+Content-Type: application/json
+Host: {{host}}
+
+{
+  "name": "test name",
+  "address": "test address"
+}

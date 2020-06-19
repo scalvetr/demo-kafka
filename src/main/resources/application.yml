@@ -1,0 +1,6 @@
+
+server:
+  shutdown: graceful
+logging:
+  root: warn
+  com.example.demo.actuator: debug
