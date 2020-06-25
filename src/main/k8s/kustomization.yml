@@ -3,7 +3,7 @@ kind: Kustomization
 commonLabels:
   app: reactive-chat
 resources:
-  demo-kafka-deployment.yml
+  - demo-kafka-deployment.yml
 #patchesStrategicMerge:
 #  - patch/memorylimit_patch.yml
 configMapGenerator:

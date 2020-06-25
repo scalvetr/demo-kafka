@@ -1,18 +1,25 @@
 spring:
-  kafka:
-    #https://docs.spring.io/autorepo/docs/spring-kafka-dist/2.2.0.BUILD-SNAPSHOT/reference/htmlsingle/#serdes
-    consumer:
-      group-id: demo-kafka
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-    producer:
-      acks: 1
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+          auto-create-topics: true
+          configuration:
+            auto.offset.reset: latest
+      default-binder: kafka
+      bindings:
+        input:
+          group: demo-kafka
+          destination: chat-messages
+          contentType: application/json
+        output:
+          destination: chat-messages
+          contentType: application/json
 
 server:
   shutdown: graceful
+
 logging:
   root: warn
-  com.example.demo.actuator: debug
+  com.github.scalvet: debug
