@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 
 
 @Component
-class MessageStreamSender constructor(val source: Source) {
+class MessageStreamSender constructor(val source: MessageStream) {
     var log = loggerFor(this::class.java)
 
     fun send(message: Message) {

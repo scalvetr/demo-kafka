@@ -7,15 +7,21 @@ spring:
           auto-create-topics: false
           configuration:
             auto.offset.reset: latest
-      default-binder: kafka
+      #default-binder: kafka
       bindings:
-        input:
+        message-stream-input:
           group: demo-kafka
-          destination: chat-messages
+          destination: messages-topic
           contentType: application/json
-        output:
-          destination: chat-messages
+          binder: kafka
+        message-stream-output:
+          destination: messages-topic
           contentType: application/json
+          binder: kafka
+        #client-stream-input:
+        #  binder: kafka
+        #client-stream-output:
+        #  binder: kafka
 
 server:
   shutdown: graceful
