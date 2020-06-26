@@ -5,11 +5,27 @@ metadata:
   labels:
     app: kafka-broker
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
-    - port: 9092
-      name: kafka-port
+    - name: client-port
+      port: 9092
       protocol: TCP
-      nodePort: 9092
+      targetPort: 9092
   selector:
     app: kafka-broker
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-broker-0
+  labels:
+    app: kafka-broker
+spec:
+  type: ClusterIP
+  ports:
+    - name: client-port
+      port: 9092
+      protocol: TCP
+      targetPort: 9092
+  selector:
+    statefulset.kubernetes.io/pod-name: kafka-broker-0

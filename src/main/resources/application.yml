@@ -4,7 +4,7 @@ spring:
       kafka:
         binder:
           brokers: localhost:9092
-          auto-create-topics: true
+          auto-create-topics: false
           configuration:
             auto.offset.reset: latest
       default-binder: kafka
