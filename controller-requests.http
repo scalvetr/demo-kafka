@@ -1,6 +1,6 @@
 ### GET request to /actuator/health
 GET {{baseUrl}}/messages
-Accept: application/json
+Accept: text/event-stream
 Host: {{host}}
 
 
@@ -10,7 +10,7 @@ Content-Type: application/json
 Host: {{host}}
 
 {
-  "recipient": "recipient",
   "origin": "origin",
+  "title": "title",
   "message": "message"
 }

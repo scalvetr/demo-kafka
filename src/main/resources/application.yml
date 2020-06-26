@@ -18,10 +18,11 @@ spring:
           destination: messages-topic
           contentType: application/json
           binder: kafka
-        #client-stream-input:
-        #  binder: kafka
-        #client-stream-output:
-        #  binder: kafka
+        client-stream-input:
+          destination: client-topic
+
+        client-stream-output:
+          destination: client-topic
 
 server:
   shutdown: graceful
