@@ -5,6 +5,6 @@ import java.util.function.Consumer
 
 interface MessageService {
     fun send(message: Message)
-    fun recieved(message: Message)
+    fun received(message: Message)
     fun subscribe(consumer: Consumer<Message>)
 }

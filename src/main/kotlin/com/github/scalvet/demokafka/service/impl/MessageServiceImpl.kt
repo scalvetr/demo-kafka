@@ -31,7 +31,7 @@ constructor(
             this.clientMessageSink = sink
         }, FluxSink.OverflowStrategy.IGNORE).publish().autoConnect()
         clientMessageChannel.subscribe{ handler ->
-            recieved(handler.payload as Message)
+            received(handler.payload as Message)
         }
     }
 
@@ -40,7 +40,7 @@ constructor(
         messageStreamSender.send(message)
     }
 
-    override fun recieved(message: Message) {
+    override fun received(message: Message) {
         log.info("received message {}", message)
         clientMessageSink.next(message)
     }
