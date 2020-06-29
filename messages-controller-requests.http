@@ -1,10 +1,10 @@
-### GET request to /actuator/health
+### GET request to /messages
 GET {{baseUrl}}/messages
 Accept: text/event-stream
 Host: {{host}}
 
 
-### POST request to /actuator/custom false
+### POST request to /messages
 POST {{baseUrl}}/messages
 Content-Type: application/json
 Host: {{host}}
@@ -12,5 +12,6 @@ Host: {{host}}
 {
   "origin": "origin",
   "title": "title",
-  "message": "message"
+  "content": "message",
+  "timestamp": "2020-06-29T16:50:40.236Z"
 }

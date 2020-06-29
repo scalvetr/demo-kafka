@@ -5,17 +5,18 @@ import com.github.scalvet.demokafka.domain.model.Message
 import com.github.scalvet.demokafka.service.MessageService
 import org.springframework.cloud.stream.annotation.StreamListener
 import org.springframework.messaging.handler.annotation.Payload
+import org.springframework.messaging.handler.annotation.SendTo
 import org.springframework.stereotype.Component
 
 
 @Component
-class MessageStreamListener constructor(val service: MessageService) {
+class MessageStreamListener {
     var log = loggerFor(this::class.java)
 
     @StreamListener(MessageStream.INPUT)
-    fun listen(@Payload message: Message) {
+    @SendTo("clientMessageChannel")
+    fun listen(@Payload message: Message) : Message {
         log.info("message received from kafka {}", message)
-        //TODO fix this. Shouldn't be calling a service from here
-        service.recieved(message)
+        return message
     }
 }

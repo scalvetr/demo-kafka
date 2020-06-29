@@ -7,7 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
+import reactor.core.publisher.DirectProcessor
 import reactor.core.publisher.Flux
+import reactor.core.publisher.FluxProcessor
+import reactor.core.publisher.FluxSink
+import java.time.Duration
+import java.time.temporal.ChronoUnit
 import java.util.function.Consumer
 
 @RequestMapping("/messages")
@@ -30,16 +35,16 @@ class MessagesController @Autowired constructor(
         messageService.send(messages);
     }
 
-    @GetMapping(produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
+    @GetMapping(path = ["/stream"], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun receive(): Flux<Message> {
-        return Flux.create { sink ->
+        val processor: FluxProcessor<Message, Message> = DirectProcessor.create()
+        val sink = processor.sink(FluxSink.OverflowStrategy.BUFFER)
 
-            var handler = Consumer<Message> { message ->
-                log.info("sending message to client {}", message)
-                sink.next(message)
-            }
-            messageService.subscribe(handler)
-            sink.onCancel { log.info("flux cancelled") }
+        var handler = Consumer<Message> { message ->
+            log.info("sending message to client {}", message)
+            sink.next(message)
         }
+        messageService.subscribe(handler)
+        return processor.serialize().delayElements(Duration.of(2, ChronoUnit.SECONDS))
     }
 }
