@@ -11,7 +11,6 @@ Host: {{host}}
 
 {
   "origin": "origin",
-  "title": "title",
   "content": "message",
   "timestamp": "2020-06-29T16:50:40.236Z"
 }
