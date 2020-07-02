@@ -1,6 +1,22 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: external-kafka-broker-0
+  labels:
+    app: kafka-broker
+spec:
+  type: NodePort
+  ports:
+    - name: client-port
+      port: 31090
+      protocol: TCP
+      targetPort: 31090
+  selector:
+    app: kafka-broker
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: kafka-broker
   labels:
     app: kafka-broker

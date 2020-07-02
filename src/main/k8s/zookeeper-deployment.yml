@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: zookeeper
-  serviceName: zookeeper
+  serviceName: kafka-cluster
   replicas: 1
   updateStrategy:
     type: RollingUpdate

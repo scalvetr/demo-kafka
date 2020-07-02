@@ -20,14 +20,24 @@ skaffold dev --trigger notify
 
 ## Test
 ```shell script
-curl -s -H "Host: demo-kafka.local" http://192.168.99.100/messages/stream 
-
+curl -s -H "Host: demo-kafka.minikube" http://`minikube ip`/messages/stream 
 
 curl -X POST \
 -H "Host: demo-kafka.local" \
 -H "Content-Type: application/json" \
 -d "{'origin': 'origin', 'content': 'message', 'timestamp': '2020-06-29T16:50:40.236Z' }"
-http://192.168.99.100/messages 
+http://`minikube ip`/messages 
+```
+
+## Access 
+```shell script
+# Access kafka-broker-0 on port 9100
+kubectl port-forward deployment/kafka-broker-0 9100:9092
+# Access kafka-broker-1 on port 9101
+kubectl port-forward deployment/kafka-broker-1 9100:9092
+# Access kafka-broker-2 on port 9102
+kubectl port-forward deployment/kafka-broker-1 9100:9092
+
 ```
 
 ## Documentation

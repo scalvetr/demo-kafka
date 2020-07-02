@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demo-kafka
+  name: demo-kafka-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: demo-kafka
+      app: demo-kafka-api
   template:
     metadata:
       labels:
-        app: demo-kafka
+        app: demo-kafka-api
     spec:
       containers:
-        - name: demo-kafka
-          image: demo-kafka
+        - name: demo-kafka-api
+          image: demo-kafka-api
           imagePullPolicy: Never
           #imagePullPolicy: IfNotPresent
           ports:
@@ -42,37 +42,21 @@ spec:
             - name: spring.config.location
               value: classpath:application.yml,file:/app/config/application.yml
           volumeMounts:
-            - name: demo-kafka-config
+            - name: demo-kafka-api-config
               mountPath: /app/config
       volumes:
-        - name: demo-kafka-config
+        - name: demo-kafka-api-config
           configMap:
-            name: demo-kafka-config
+            name: demo-kafka-api-config
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: demo-kafka
+  name: demo-kafka-api
 spec:
   type: NodePort
   ports:
     - protocol: TCP
       port: 8080
   selector:
-    app: demo-kafka
----
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: demo-kafka-ingress
-#  annotations:
-#    nginx.ingress.kubernetes.io/rewrite-target: /$1
-spec:
-  rules:
-    - host: demo-kafka.local
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: demo-kafka
-              servicePort: 8080
+    app: demo-kafka-api
