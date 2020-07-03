@@ -8,9 +8,9 @@ resources:
   - kafka-deployment.yml
   - kafka-service.yml
   - api-deployment.yml
-#patchesStrategicMerge:
-#  - patch/memorylimit_patch.yml
+  - ui-deployment.yml
+  - ingress.yml
 configMapGenerator:
-  - name: demo-kafka-config
+  - name: demo-kafka-api-config
     files:
       - config/application.yml

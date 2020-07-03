@@ -2,16 +2,19 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: demo-kafka-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/app-root: /ui
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
     - host: demo-kafka.minikube
       http:
         paths:
-          - path: /api
-            backend:
-              serviceName: demo-kafka-api
-              servicePort: 8080
-          - path: /ui
+          - path: /ui(/|$)(.*)
             backend:
               serviceName: demo-kafka-ui
               servicePort: 80
+          - path: /api(/|$)(.*)
+            backend:
+              serviceName: demo-kafka-api
+              servicePort: 8080
